@@ -25,7 +25,7 @@ namespace BookManagment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<BookContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConn")));
+            services.AddDbContext<BookContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConn")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
