@@ -1,24 +1,40 @@
-﻿@model BookManagment.Models.Publisher
+@model BookManagment.Models.Publisher
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Publisher Details";
 }
 
-<h1>Details</h1>
+<div class="page-header">
+    <h1>
+        <span class="page-icon"><i class="bi bi-building"></i></span>
+        Publisher Details
+    </h1>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left mr-1"></i> Back to Publishers
+    </a>
+</div>
 
-<div>
-    <h4>Publisher</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PublisherName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PublisherName)
-        </dd>
-    </dl>
+<div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+        <div class="card tmb-card">
+            <div class="card-header">
+                <i class="bi bi-building-fill mr-2"></i>@Model.PublisherName
+            </div>
+            <div class="card-body">
+                <dl class="row tmb-detail-list">
+                    <dt class="col-sm-4">Publisher Name</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.PublisherName)</dd>
+                </dl>
+                <div class="d-flex justify-content-between mt-3">
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left mr-1"></i> Back
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                        <i class="bi bi-pencil mr-1"></i> Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

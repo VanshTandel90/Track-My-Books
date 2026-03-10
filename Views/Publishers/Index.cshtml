@@ -1,35 +1,49 @@
-﻿@model IEnumerable<BookManagment.Models.Publisher>
+@model IEnumerable<BookManagment.Models.Publisher>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Publishers";
 }
 
-<h1>Index</h1>
+<div class="page-header">
+    <h1>
+        <span class="page-icon"><i class="bi bi-building"></i></span>
+        Publishers
+    </h1>
+    <a asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle mr-1"></i> Add Publisher
+    </a>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PublisherName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublisherName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="tmb-table">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Publisher Name</th>
+                <th style="width:140px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="fw-600">
+                        <i class="bi bi-building-fill mr-2 tmb-muted"></i>
+                        @Html.DisplayFor(modelItem => item.PublisherName)
+                    </td>
+                    <td class="action-btns">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,65 +1,64 @@
-﻿@*@model IEnumerable<BookManagment.Models.Book>*@
 @model BookManagment.Models.ViewModels.BookIndexData
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Books";
 }
 
-<h1>Index</h1>
+<div class="page-header">
+    <h1>
+        <span class="page-icon"><i class="bi bi-journals"></i></span>
+        Books
+    </h1>
+    <a asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle mr-1"></i> Add New Book
+    </a>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Title
-                @*@Html.DisplayNameFor(model => model.Title)*@
-            </th>
-            <th>
-                Publishing Date
-                @*@Html.DisplayNameFor(model => model.PublishingDate)*@
-            </th>
-            <th>
-                Category
-                @*@Html.DisplayNameFor(model => model.Category)*@
-            </th>
-            <th>
-                Publisher
-                @*@Html.DisplayNameFor(model => model.Publisher)*@
-            </th>
-            <th>Authors</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Books) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
-            </td>
-            <td>
-                @foreach (var author in item.BookAuthors)
-                {
-                    @author.Author.FullName <br />
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="tmb-table">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Publishing Date</th>
+                <th>Category</th>
+                <th>Publisher</th>
+                <th>Authors</th>
+                <th style="width:150px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Books)
+            {
+                <tr>
+                    <td class="fw-600">@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td class="tmb-muted">@item.PublishingDate.ToString("MMM d, yyyy")</td>
+                    <td>
+                        @{
+                            var catClass = "badge-cat-" + item.Category.ToString().ToLower();
+                        }
+                        <span class="badge @catClass">@item.Category</span>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Publisher.PublisherName)</td>
+                    <td>
+                        @foreach (var ba in item.BookAuthors)
+                        {
+                            <span class="badge badge-author">@ba.Author.FullName</span>
+                        }
+                    </td>
+                    <td class="action-btns">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

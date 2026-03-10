@@ -1,91 +1,87 @@
-﻿@model BookManagment.Models.Book
+@model BookManagment.Models.Book
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Book";
 }
 
-<h1>Edit</h1>
-
-<h4>Book</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PublishingDate" class="control-label"></label>
-                <input asp-for="PublishingDate" class="form-control" type="date" asp-format="{0:yyyy-MM-dd}" />
-                <span asp-validation-for="PublishingDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <select asp-for="Category" asp-items="@Html.GetEnumSelectList<Category>()" class="form-control"></select>
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PublisherId" class="control-label"></label>
-                <select asp-for="PublisherId" class="form-control" asp-items="ViewBag.PublisherId"></select>
-                <span asp-validation-for="PublisherId" class="text-danger"></span>
-            </div>
-
-            @* <table>
-                <tr>
-                    @{
-                        List<BookManagment.Models.ViewModels.BookCheckBoxViewModel> authors = ViewBag.Authors;
-                    }
-                    <th>Select autors of the book</th>
-                </tr>
-                <tr>
-                    @foreach (var author in ViewBag.Authors)
-                    {
-                        <td>
-
-                            <input type="checkbox"
-                                   name="selectedAuthors"
-                                   value="@author.Id"
-                                   @(Html.Raw(author.Checked ? "checked=\"Checked\"" : "")) />
-                            @author.FullName
-
-                        </td>
-                    }
-                </tr>
-            </table> *@
-
-
-            <div class="form-group">
-                <label class="control-label">Select Authors</label>
-                <div class="card p-2" style="max-height: 200px; overflow-y: auto;">
-                    @foreach (var author in ViewBag.Authors)
-                    {
-                        <div class="form-check">
-                            <input type="checkbox"
-                                   class="form-check-input"
-                                   name="selectedAuthors"
-                                   value="@author.Id"
-                                   @(author.Checked ? "checked" : "") />
-                            <label class="form-check-label">@author.FullName</label>
-                        </div>
-                    }
-                </div>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="page-header">
+    <h1>
+        <span class="page-icon"><i class="bi bi-pencil-square"></i></span>
+        Edit Book
+    </h1>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left mr-1"></i> Back to Books
+    </a>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="row justify-content-center">
+    <div class="col-lg-7 col-md-9">
+        <div class="card tmb-card">
+            <div class="card-header warning">
+                <i class="bi bi-pencil mr-2"></i>Editing: <em>@Model.Title</em>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2" style="font-size:.85rem;"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group">
+                        <label asp-for="Title"><i class="bi bi-type mr-1"></i>Title</label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PublishingDate"><i class="bi bi-calendar3 mr-1"></i>Publishing Date</label>
+                        <input asp-for="PublishingDate" class="form-control" type="date" asp-format="{0:yyyy-MM-dd}" />
+                        <span asp-validation-for="PublishingDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Category"><i class="bi bi-tag mr-1"></i>Category</label>
+                        <select asp-for="Category" asp-items="@Html.GetEnumSelectList<Category>()" class="form-control"></select>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PublisherId"><i class="bi bi-building mr-1"></i>Publisher</label>
+                        <select asp-for="PublisherId" class="form-control" asp-items="ViewBag.PublisherId"></select>
+                        <span asp-validation-for="PublisherId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="bi bi-people mr-1"></i>Select Authors</label>
+                        <div class="checkbox-scroll-area">
+                            @foreach (var author in ViewBag.Authors)
+                            {
+                                <div class="form-check">
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           id="edit_author_@author.Id"
+                                           name="selectedAuthors"
+                                           value="@author.Id"
+                                           @(author.Checked ? "checked" : "") />
+                                    <label class="form-check-label" for="edit_author_@author.Id">@author.FullName</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-x mr-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check2 mr-1"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
